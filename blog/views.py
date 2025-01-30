@@ -1,10 +1,10 @@
-from .models import Post
-from .forms import EmailPostForm
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Post, Comment
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import ListView
+from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
-from django.conf import settings
-
+from django.views.decorators.http import require_POST
 
 
 def post_list(request):
@@ -64,4 +64,23 @@ def post_share(request, post_id):
     return render(request, 'blog/post/share.html', {'post': post,
                                                     'form': form,
                                                     'sent': sent})
+
+
+@require_POST
+def post_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
+
+    comment = None
+    #Комментарий был отправлен
+    form = CommentForm(data=request.POST)
+    if form.is_valid():
+        # Создать объект класса Comment, не сохраняя его в базе
+        comment = form.save(commit=False)
+        # Назначить пост комментарию
+        comment.post = post
+        # Сохранить комментарий в базе
+        comment.save()
+    return render(request, 'blog/post/comment.html', {'post': post, 'form': form, 'comment': comment})
+
+
 
