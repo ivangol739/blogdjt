@@ -10,3 +10,4 @@ class PostAdmin(admin.ModelAdmin):
     raw_id_fields = ['author'] #Поиск при выборе автора
     date_hierarchy = 'publish' #Навигационные ссылки, предназначенные для перемещения по иерархии дат, ниже поиска
     ordering = ['status', 'publish'] #упорядочивание по статусу
+
