@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from taggit.managers import TaggableManager
+
 
 #менеджер, который позволит нам получать опубликованные посты через Post.published.all()
 class PublishedManager(models.Manager):
@@ -26,6 +28,8 @@ class Post(models.Model):
     objects = models.Manager() # менеджер, применяемый по умолчанию
     published = PublishedManager()  # пользовательский менеджер
 
+    tags = TaggableManager()
+
     class Meta:
         ordering = ['-publish']
         indexes = [
@@ -41,6 +45,7 @@ class Post(models.Model):
                              self.publish.month,
                              self.publish.day,
                              self.slug])
+
 
 
 class Comment(models.Model):
