@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,6 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = "/"
