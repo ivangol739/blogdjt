@@ -57,7 +57,15 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'accounts.apps.AccountsConfig',
     'django_bootstrap5',
+    'rest_framework',
+    'blog_api.apps.BlogApiConfig',
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
